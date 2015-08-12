@@ -1,0 +1,69 @@
+.MODEL SMALL
+.STACK
+.DATA
+	lblname db "Enter your name: $"
+	lblpname db "Your name is $"
+	string db "$"
+
+.CODE
+START:
+	MOV AX, @DATA
+	MOV DS, AX
+
+	; PAINT WHOLE SCREEN BLACK
+	MOV AX, 0600H
+	MOV BH, 07H
+	MOV CX, 0000H
+	MOV DX, 184FH
+	INT 10H
+
+	; MOVE CURSOR FOR LBLNAME
+	MOV AH, 02H
+	MOV BH, 00
+	MOV DX, 0C1FH
+	INT 10H
+
+	; PRINT LBLNAME
+	MOV AH, 09H
+	LEA DX, lblname
+	INT 21H
+
+	; ACCEPT CHAR
+	LEA SI, string
+
+ACCEPT:
+	MOV AH, 01H
+	INT 21H
+
+	CMP AL, 13
+	JE STOPCHAR
+
+	MOV [SI], AL
+	INC SI
+	JMP ACCEPT
+
+STOPCHAR:
+	MOV AL, 36
+	MOV [SI], AL
+
+	; MOVE CURSOR TO NEXT LINE
+	MOV AH, 02H
+	MOV BH, 00
+	MOV DX, 0D20H
+	INT 10H
+
+	; PRINT LBLPNAME
+	MOV AH, 09H
+	LEA DX, lblpname
+	INT 21H
+
+	; PRINT string
+	MOV AH, 09H
+	LEA DX, string
+	INT 21h
+
+	; TERMINATE
+	MOV AH, 4CH
+	INT 21H
+
+END START

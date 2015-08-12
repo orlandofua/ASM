@@ -1,0 +1,378 @@
+.MODEL SMALL
+.STACK
+.DATA
+	titleBar db "REGISTRATION FORM$"
+	lblFName db "Enter your first name: $"
+	lblMName db "Enter your middle name: $"
+	lblLName db "Enter your last name: $"
+	lblCourse db "Enter your course: $"
+	lblAge db "Enter your age: $"
+	btnSubmit db "Submit$"
+	btnCancel db "Cancel$"
+	
+	
+	FNAME DB "FName: $"
+	MNAME DB "MName: $"
+	LNAME DB "LName: $"
+	COURSE DB "Course: $"
+	AGE DB "Age: $"
+	
+	CFNAME DB 0
+	CMNAME DB 0
+	CLNAME DB 0
+	CCOURSE DB 0
+	CAGE DB 0
+.CODE
+START:
+	MOV AX, @DATA
+	MOV DS, AX
+	
+	;background
+	MOV AX, 0600H
+	MOV BH, 07h
+	MOV CX, 0000H
+	MOV DX, 184FH
+	INT 10H
+	
+	;title bar
+	MOV AX, 0600H
+	MOV BH, 71H
+	MOV CX, 0000H
+	MOV DX, 004FH
+	INT 10H
+	
+	MOV AX, 0600H
+	MOV BH, 71H
+	MOV CX, 0100H
+	MOV DX, 0401H
+	INT 10H
+	
+	MOV AX, 0600H
+	MOV BH, 71H
+	MOV CX, 0401H
+	MOV DX, 044FH
+	INT 10H
+	
+	MOV AX, 0600H
+	MOV BH, 77H
+	MOV CX, 014EH
+	MOV DX, 044FH
+	INT 10H
+	
+	;PRINT TITLEBAR
+		;MOVE CURSOR
+		MOV AH, 02H
+		MOV BH, 00
+		MOV DX, 0203H
+		INT 10H
+		
+		;PRINT
+		MOV AH, 09H
+		LEA DX, titleBar
+		INT 21H
+	
+	;REST OF BORDERS
+	MOV AX, 0600H
+	MOV BH, 71H
+	MOV CX, 0500H
+	MOV DX, 1801H
+	INT 10H
+	
+	MOV AX, 0600H
+	MOV BH, 71H
+	MOV CX, 054EH
+	MOV DX, 184FH
+	INT 10H
+	
+	MOV AX, 0600H
+	MOV BH, 71H
+	MOV CX, 1802H
+	MOV DX, 184DH
+	INT 10H
+	
+	;Enter first name
+		;MOVE CURSOR
+		MOV AH, 02H
+		MOV BH, 00
+		MOV DX, 0611H                   ; 27 - 16
+		INT 10H
+		
+		;PRINT
+		MOV AH, 09H
+		LEA DX, lblFName
+		INT 21H
+		
+		;TEXTBOX
+		MOV AX, 0600H
+		MOV BH, 70H
+		MOV CX, 0628H
+		MOV DX, 0638H
+		INT 10H
+			
+	; enter middle name
+		; MOVE CURSOR
+		MOV AH, 02H
+		MOV BH, 00
+		MOV DX, 0810H
+		INT 10H
+		
+		; PRINT
+		MOV AH, 09H
+		LEA DX, lblMName
+		INT 21H
+		
+		; TEXTBOX
+		MOV AX, 0600H
+		MOV BH, 70H
+		MOV CX, 0828H
+		MOV DX, 0838H
+		INT 10H
+	
+	; ENTER LAST NAME
+		; MOVE CURSOR
+		MOV AH, 02H
+		MOV BH, 00
+		MOV DX, 0A12H
+		INT 10H
+		
+		; PRINT
+		MOV AH, 09H
+		LEA DX, lblLName
+		INT 21H
+		
+		; TEXTBOX
+		MOV AX, 0600H
+		MOV BH, 70H
+		MOV CX, 0A28H
+		MOV DX, 0A38H
+		INT 10H
+		
+	; ENTER COURSE
+		; MOVE CURSOR
+		MOV AH, 02H
+		MOV BH, 00
+		MOV DX, 0C15H
+		INT 10H
+		
+		; PRINT
+		MOV AH, 09H
+		LEA DX, lblCourse
+		INT 21H
+		
+		; TEXTBOX
+		MOV AX, 0600H
+		MOV BH, 70H
+		MOV CX, 0C28H
+		MOV DX, 0C38H
+		INT 10H
+		
+	; ENTER AGE
+		; MOVE CURSOR
+		MOV AH, 02H
+		MOV BH, 00
+		MOV DX, 0E18H
+		INT 10H
+		
+		; PRINT
+		MOV AH, 09H
+		LEA DX, lblAge
+		INT 21H
+		
+		; TEXTBOX
+		MOV AX, 0600H
+		MOV BH, 70H
+		MOV CX, 0E28H
+		MOV DX, 0E38H
+		INT 10H
+		
+	; BUTTONS
+		; SUBMIT BACKGROUND
+		MOV AX, 0600H
+		MOV BH, 70H
+		MOV CX, 101DH
+		MOV DX, 1026H
+		INT 10H
+		
+		; SUBMIT TEXT
+			; MOVE CURSOR
+			MOV AH, 02H
+			MOV BH, 00
+			MOV DX, 101FH
+			INT 10H
+			
+			; PRINT
+			MOV AH, 09H
+			LEA DX, btnSubmit
+			INT 21H
+		
+		; CANCEL BACKGROUND
+		MOV AX, 0600H
+		MOV BH, 70H
+		MOV CX, 1028H
+		MOV DX, 1031H
+		INT 10H
+		
+		; CANCEL TEXT
+			; MOVE CURSOR
+			MOV AH, 02H
+			MOV BH, 00
+			MOV DX, 102AH
+			INT 10H
+			
+			; PRINT
+			MOV AH, 09H
+			LEA DX, btnCancel
+			INT 21H
+			
+	; ACCEPT CHARACTERS
+	; FNAME 0630, MNAME 
+		; MOVE CURSOR
+		MOV AH, 02H
+		MOV BH, 00
+		MOV DX, 0630H
+		INT 10H
+		
+		; ACCEPT
+		MOV AH, 01H
+		INT 21H
+		
+		MOV CFNAME, AL
+		
+	; MNAME
+		; MOVE CURSOR
+		MOV AH, 02H
+		MOV BH, 00
+		MOV DX, 0830H
+		INT 10H
+		
+		; ACCEPT
+		MOV AH, 01H
+		INT 21H
+		
+		MOV CMNAME, AL
+	
+	; LNAME
+		; MOVE CURSOR
+		MOV AH, 02H
+		MOV BH, 00
+		MOV DX, 0A30H
+		INT 10H
+		
+		; ACCEPT
+		MOV AH, 01H
+		INT 21H
+		
+		MOV CLNAME, AL
+	
+	; COURSE
+		; MOVE CURSOR
+		MOV AH, 02H
+		MOV BH, 00
+		MOV DX, 0C30H
+		INT 10H
+		
+		; ACCEPT
+		MOV AH, 01H
+		INT 21H
+		
+		MOV CCOURSE, AL
+		
+	; AGE
+		; MOVE CURSOR
+		MOV AH, 02H
+		MOV BH, 00
+		MOV DX, 0E30H
+		INT 10H
+		
+		; ACCEPT
+		MOV AH, 01H
+		INT 21H
+		
+		MOV CAGE, AL
+		
+	; DISPLAY VARIABLES
+	; FNAME
+		; MOVE CURSOR
+		MOV AH, 02H
+		MOV BH, 00
+		MOV DX, 063AH
+		INT 10H
+		
+		; PRINT
+		MOV AH, 09H
+		LEA DX, FNAME
+		INT 21H
+		
+		MOV DL, CFNAME
+		MOV AH, 02H
+		INT 21H
+	; MNAME
+		; MOVE CURSOR
+		MOV AH, 02H
+		MOV BH, 00
+		MOV DX, 083AH
+		INT 10H
+		
+		; PRINT
+		MOV AH, 09H
+		LEA DX, MNAME
+		INT 21H
+		
+		MOV DL, CMNAME
+		MOV AH, 02H
+		INT 21H
+		
+	; LNAME
+		; MOVE CURSOR
+		MOV AH, 02H
+		MOV BH, 00
+		MOV DX, 0A3AH
+		INT 10H
+		
+		; PRINT
+		MOV AH, 09H
+		LEA DX, LNAME
+		INT 21H
+		
+		MOV DL, CLNAME
+		MOV AH, 02H
+		INT 21H
+		
+	; COURSE
+		; MOVE CURSOR
+		MOV AH, 02H
+		MOV BH, 00
+		MOV DX, 0C3AH
+		INT 10H
+		
+		; PRINT
+		MOV AH, 09H
+		LEA DX, COURSE
+		INT 21H
+		
+		MOV DL, CCOURSE
+		MOV AH, 02H
+		INT 21H
+		
+	; AGE
+		; MOVE CURSOR
+		MOV AH, 02H
+		MOV BH, 00
+		MOV DX, 0E3AH
+		INT 10H
+		
+		; PRINT
+		MOV AH, 09H
+		LEA DX, AGE
+		INT 21H
+		
+		MOV DL, CAGE
+		MOV AH, 02H
+		INT 21H
+	
+	;TERMINATE
+	MOV AH, 4CH
+	INT 21H
+	
+	
+END START

@@ -1,0 +1,194 @@
+.model small
+.stack
+.data
+	msg1 db "Orlando B. Fua III$"
+.code
+start:
+		MOV AX, @data
+		MOV DS, AX
+
+background:
+		MOV AX, 0600H
+		MOV BH, 10
+		MOV CX, 0000H
+		MOV DX, 184FH
+		INT 10H
+		
+O:	
+		;1st letter
+		;1st col
+		MOV AX, 0600H
+		MOV BH, 70
+		MOV CX, 070FH
+		MOV DX, 1112H
+		INT 10H
+		
+		;2nd col
+		MOV AX, 0600H
+		MOV BH, 70
+		MOV CX, 0610H
+		MOV DX, 0613H
+		INT 10H
+		
+		MOV AX, 0600H
+		MOV BH, 70
+		MOV CX, 0512H
+		MOV DX, 0517H
+		INT 10H
+		
+		MOV AX, 0600H
+		MOV BH, 70
+		MOV CX, 0616H
+		MOV DX, 0619H
+		INT 10H
+		
+		;3rd col
+		MOV AX, 0600H
+		MOV BH, 70
+		MOV CX, 0717H
+		MOV DX, 111AH
+		INT 10H
+		
+		;back to 2nd col
+		MOV AX, 0600H
+		MOV BH, 70
+		MOV CX, 1216H
+		MOV DX, 1219H
+		INT 10H
+		
+		MOV AX, 0600H
+		MOV BH, 70
+		MOV CX, 1210H
+		MOV DX, 1213H
+		INT 10H
+		
+		MOV AX, 0600H
+		MOV BH, 70
+		MOV CX, 1312H
+		MOV DX, 1317H
+		INT 10H
+		
+B:
+		;1st col
+		MOV AX, 0600H
+		MOV BH, 70
+		MOV CX, 051DH
+		MOV DX, 1320H
+		INT 10H
+		
+		;2nd col
+		MOV AX, 0600H
+		MOV BH, 70
+		MOV CX, 0521H
+		MOV DX, 0524H
+		INT 10H
+		
+		MOV AX, 0600H
+		MOV BH, 70
+		MOV CX, 0623H
+		MOV DX, 0626H
+		INT 10H
+		
+		MOV AX, 0600H
+		MOV BH, 70
+		MOV CX, 0724H
+		MOV DX, 0727H
+		INT 10H
+		
+		MOV AX, 0600H
+		MOV BH, 70
+		MOV CX, 0826H
+		MOV DX, 0928H
+		INT 10H
+		
+		MOV AX, 0600H
+		MOV BH, 70
+		MOV CX, 0A24H
+		MOV DX, 0A27H
+		INT 10H
+		
+		MOV AX, 0600H
+		MOV BH, 70
+		MOV CX, 0B23H
+		MOV DX, 0B26H
+		INT 10H
+		
+		MOV AX, 0600H
+		MOV BH, 70
+		MOV CX, 0C21H
+		MOV DX, 0C24H
+		INT 10H
+		
+		MOV AX, 0600H
+		MOV BH, 70
+		MOV CX, 0D23H
+		MOV DX, 0D26H
+		INT 10H
+		
+		MOV AX, 0600H
+		MOV BH, 70
+		MOV CX, 0E24H
+		MOV DX, 0E27H
+		INT 10H
+		
+		MOV AX, 0600H
+		MOV BH, 70
+		MOV CX, 0F26H
+		MOV DX, 1028H
+		INT 10H
+		
+		MOV AX, 0600H
+		MOV BH, 70
+		MOV CX, 1124H
+		MOV DX, 1127H
+		INT 10H
+		
+		MOV AX, 0600H
+		MOV BH, 70
+		MOV CX, 1223H
+		MOV DX, 1225H
+		INT 10H
+		
+		MOV AX, 0600H
+		MOV BH, 70
+		MOV CX, 1321H
+		MOV DX, 1324H
+		INT 10H
+		
+F:
+		;1st col
+		MOV AX, 0600H
+		MOV BH, 70
+		MOV CX, 052BH
+		MOV DX, 132EH
+		INT 10H
+		
+		;2nd col
+		MOV AX, 0600H
+		MOV BH, 70
+		MOV CX, 052FH
+		MOV DX, 0637H
+		INT 10H
+		
+		MOV AX, 0600H
+		MOV BH, 70
+		MOV CX, 0B2FH
+		MOV DX, 0C33H
+		INT 10H
+		
+		;move cursor position
+		MOV AH, 02H
+		MOV BH, 00
+		MOV DX, 1617H
+		INT 10H
+		
+		;print name
+		MOV AH, 09H
+		LEA DX, msg1
+		INT 21H
+		
+		
+		;terminate
+		MOV AH, 4CH
+		INT 21H
+end start
