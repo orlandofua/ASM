@@ -60,6 +60,7 @@
 	lblhquestion31 db "the flow of a program without taking$"
 	lblhquestion32 db "into account the actual conditions of$"
 	lblhquestion32 db "the flags or of the data.$"
+	lblhanswer3 db "JMP$"
 
 	tryagain db "$"
 	lblreadyanswer db "$"
