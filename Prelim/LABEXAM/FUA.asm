@@ -50,6 +50,17 @@
 	lblhquestion13 db "operations."
 	lblhanswer1 db "ASSEMBLY$"
 
+	; question 2
+	lblhquestion20 db "A program that translates low-level$"
+	lblhquestion21 db "programs into machine language.$"
+	lblhanswer2 db "ASSEMBLER$"
+
+	; question 3
+	lblhquestion30 db "This instruction is used to deviate$"
+	lblhquestion31 db "the flow of a program without taking$"
+	lblhquestion32 db "into account the actual conditions of$"
+	lblhquestion32 db "the flags or of the data.$"
+
 	tryagain db "$"
 	lblreadyanswer db "$"
 	examineename db "$"
@@ -1924,6 +1935,46 @@ HARDWRONGQ1:
 	MOV AH, 01H
 	INT 21H
 	JMP HARDQ2
+
+HARDQ2:
+	; PAINT WHOLE SCREEN BLACK
+	MOV AX, 0600H
+	MOV BH, 00
+	MOV CX, 0000H
+	MOV DX, 184FH
+	INT 10H
+
+	; PAINT GREEN BOX
+	MOV AX, 0600H
+	MOV BH, 20H
+	MOV CX, 0613H
+	MOV DX, 123BH
+	INT 10H
+
+	; PAINT EXAMINEE BAR WHITE
+	MOV AX, 0600H
+	MOV BH, 70H
+	MOV CX, 1800H
+	MOV DX, 184FH
+	INT 10H
+
+	; MOVE CURSOR FOR LBLEXAMINEE
+	MOV AH, 02H
+	MOV BH, 00
+	MOV DX, 1800H
+	INT 10H
+
+	; PRINT LBLEXAMINEE
+	MOV AH, 09H
+	LEA DX, LBLEXAMINEE
+	INT 21H
+
+	; PRINT EXAMINEENAME
+	MOV AH, 09H
+	LEA DX, EXAMINEENAME
+	INT 21H
+
+	; MOVE CURSOR 
 
 	
 STARS:
