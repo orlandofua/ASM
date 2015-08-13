@@ -2,6 +2,11 @@
 .STACK
 .DATA
 	lblexaminee db "Examinee: $"
+
+	score db 0
+	easyanswer1 db 0
+	easyanswer2 db 0
+	easyanswer3 db 0
 	
 	; choose between easy, medium, or hard
 	lblchoice db "Please choose a category: $"
@@ -47,7 +52,7 @@
 	lblhquestion10 db "A type of low-level language in which$"
 	lblhquestion11 db "mnemonic abbreviations represent$"
 	lblhquestion12 db "machine operations and storage$"
-	lblhquestion13 db "operations."
+	lblhquestion13 db "operations.$"
 	lblhanswer1 db "ASSEMBLY$"
 
 	; question 2
@@ -59,16 +64,12 @@
 	lblhquestion30 db "This instruction is used to deviate$"
 	lblhquestion31 db "the flow of a program without taking$"
 	lblhquestion32 db "into account the actual conditions of$"
-	lblhquestion32 db "the flags or of the data.$"
+	lblhquestion33 db "the flags or of the data.$"
 	lblhanswer3 db "JMP$"
 
 	tryagain db "$"
 	lblreadyanswer db "$"
 	examineename db "$"
-	score db 0
-	easyanswer1 db 0
-	easyanswer2 db 0
-	easyanswer3 db 0
 	mediumanswer1 db "$"
 	mediumanswer2 db "$"
 	mediumanswer3 db "$"
@@ -1007,7 +1008,7 @@ EASYWRONGQ3:
 NOTEASY:
 	CMP USERCHOICE, 32H
 	JE MEDIUMQ1
-;	JMP NOTMEDIUM
+	JMP NOTMEDIUM
 
 MEDIUMQ1:
 
@@ -1728,25 +1729,26 @@ HARDQ1:
 	LEA DX, LBLNQUESTION1
 	INT 21H
 
-	; MOVE CURSOR FOR LBLMQUESTION10
+	; MOVE CURSOR FOR LBLHQUESTION10
 	MOV AH, 02H
 	MOV BH, 00
 	MOV DX, 0715H
 	INT 10H
 	
-	; PRINT LBLMQUESTION10
+	; PRINT LBLHQUESTION10
 	MOV AH, 09H
-	LEA DX, LBLMQUESTION1
+	LEA DX, LBLHQUESTION10
 	INT 21H
 	
-	; MOVE CURSOR FOR LBLMQUESTION11
+	; MOVE CURSOR FOR LBLHQUESTION11
 	MOV AH, 02H
 	MOV BH, 00
 	MOV DX, 0817H
+	INT 10H
 	
-	; PRINT LBLMQUESTION11
+	; PRINT LBLHQUESTION11
 	MOV AH, 09H
-	LEA DX, LBLMQUESTION11
+	LEA DX, LBLHQUESTION11
 	INT 21H
 	
 	; MOVE CURSOR FOR LBLHQUESTION12
@@ -1757,7 +1759,7 @@ HARDQ1:
 	
 	; PRINT LBLHQUESTION12
 	MOV AH, 09H
-	LEA DX, LBLHQUESTION2
+	LEA DX, LBLHQUESTION12
 	INT 21H
 	
 	; MOVE CURSOR FOR LBLHQUESTION13
@@ -2028,13 +2030,13 @@ STARS:
 	INT 10H
 
 	; PRINT LBLSTARS > 0
-	CMP SCORE, 0H
+	CMP SCORE, 0
 	JE ZEROSTAR
-	CMP SCORE, 1H
+	CMP SCORE, 1
 	JE ONESTAR
-	CMP SCORE, 2H
+	CMP SCORE, 2
 	JE TWOSTARS
-	CMP SCORE, 3H
+	CMP SCORE, 3
 	JE THREESTARS
 
 ZEROSTAR:
