@@ -7,6 +7,7 @@
 	easyanswer1 db 0
 	easyanswer2 db 0
 	easyanswer3 db 0
+	examineename db "$"
 	
 	; choose between easy, medium, or hard
 	lblchoice db "Please choose a category: $"
@@ -69,13 +70,13 @@
 
 	tryagain db "$"
 	lblreadyanswer db "$"
-	examineename db "$"
 	mediumanswer1 db "$"
 	mediumanswer2 db "$"
 	mediumanswer3 db "$"
 	hardanswer1 db "$"
 	hardanswer2 db "$"
 	hardanswer3 db "$"
+	
 .CODE
 START:
 	MOV AX, @DATA
@@ -1978,7 +1979,6 @@ HARDQ2:
 	INT 21H
 
 	; MOVE CURSOR 
-
 	
 STARS:
 
