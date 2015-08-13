@@ -2,13 +2,16 @@
 .STACK
 .DATA
 	lblexaminee db "Examinee: $"
-
+	examineename db "$"
+	tryagain db "$"
+	separatingvar db "The quick brown fox jumps over the lazy dog near the bank of the river.$"
 	score db 0
 	easyanswer1 db 0
+	separatingvar1 db "The quick brown fox jumps over the lazy dog near the bank of the river.$"
 	easyanswer2 db 0
+	separatingvar2 db "The quick brown fox jumps over the lazy dog near the bank of the river.$"
 	easyanswer3 db 0
-	examineename db "$"
-	
+	separatingvar3 db "The quick brown fox jumps over the lazy dog near the bank of the river.$"
 	; choose between easy, medium, or hard
 	lblchoice db "Please choose a category: $"
 	lblchoiceeasy db "1. Easy$"
@@ -17,6 +20,8 @@
 	lbluserchoice db "Enter your choice: $"
 	userchoice db "$"
 
+
+	separatingvar4 db "The quick brown fox jumps over the lazy dog near the bank of the river.$"
 	lblready db "Are you ready to take the quiz?[Y/N]: $"
 	lblname db "Enter your name: $"
 	lblanswer1 db "A. YES    B. NO$"
@@ -68,14 +73,20 @@
 	lblhquestion33 db "the flags or of the data.$"
 	lblhanswer3 db "JMP$"
 
-	tryagain db "$"
 	lblreadyanswer db "$"
+	separatingvar5 db "The quick brown fox jumps over the lazy dog near the bank of the river.$"
 	mediumanswer1 db "$"
+	separatingvar6 db "The quick brown fox jumps over the lazy dog near the bank of the river.$"
 	mediumanswer2 db "$"
+	separatingvar7 db "The quick brown fox jumps over the lazy dog near the bank of the river.$"
 	mediumanswer3 db "$"
+	separatingvar8 db "The quick brown fox jumps over the lazy dog near the bank of the river.$"
 	hardanswer1 db "$"
+	separatingvar9 db "The quick brown fox jumps over the lazy dog near the bank of the river.$"
 	hardanswer2 db "$"
+	separatingvar10 db "The quick brown fox jumps over the lazy dog near the bank of the river.$"
 	hardanswer3 db "$"
+	separatingvar11 db "The quick brown fox jumps over the lazy dog near the bank of the river.$"
 	
 .CODE
 START:
@@ -387,7 +398,7 @@ STOPEASYQ1ANSWER:
 	JMP EASYWRONGQ1
 
 EASYCORRECTQ1:
-
+	MOV SCORE, 0
 	ADD SCORE, 1
 	; PAINT WHOLE SCREEN BLACK
 	MOV AX, 0600H
@@ -1109,6 +1120,7 @@ STOPMEDIUMQ1ANSWER:
 
 MEDIUMCORRECTQ1:
 
+	MOV SCORE, 0
 	ADD SCORE, 1
 	; PAINT WHOLE SCREEN BLACK
 	MOV AX, 0600H
@@ -1810,6 +1822,7 @@ STOPHARDQ1ANSWER:
 	JMP HARDWRONGQ1
 
 HARDCORRECTQ1:
+	MOV SCORE, 0
 	ADD SCORE, 1
 	; PAINT SCREEN BLACK
 	MOV AX, 0600H
@@ -1978,8 +1991,206 @@ HARDQ2:
 	LEA DX, EXAMINEENAME
 	INT 21H
 
-	; MOVE CURSOR 
-	
+	; MOVE CURSOR FOR LBLNQUESTION2
+	MOV AH, 02H
+	MOV BH, 00
+	MOV DX, 0614H
+	INT 10H
+
+	; PRINT LBLNQUESITON2
+	MOV AH, 09H
+	LEA DX, LBLNQUESTION2
+	INT 21H
+
+	; MOVE CURSOR FOR LBLHQUESTION20
+	MOV AH, 02H
+	MOV BH, 00
+	MOV DX, 0716H
+	INT 10H
+
+	; PRINT LBLHQUESITON20
+	MOV AH, 09H
+	LEA DX, LBLHQUESTION20
+	INT 21H
+
+	; MOVE CURSOR FOR LBLHQUESTION21
+	MOV AH, 02H
+	MOV BH, 00
+	MOV DX, 0818H
+	INT 10H
+
+	; PRINT LBLHQUESTION21
+	MOV AH, 09H
+	LEA DX, LBLHQUESTION21
+	INT 21H
+
+	; MOVE CURSOR FOR LBLMANSWER
+	MOV AH, 02H
+	MOV BH, 00
+	MOV DX, 0B14H
+	INT 10H
+
+	; PRINT LBLMANSWER
+	MOV AH, 09H
+	LEA DX, LBLMANSWER
+	INT 21H
+
+	; ACCEPT HARDANSWER2
+	LEA SI, HARDANSWER2
+
+ACCEPTHARDQ2ANSWER:
+	MOV AH, 01H
+	INT 21H
+
+	CMP AL, 13
+	JE STOPHARDQ2ANSWER
+
+	MOV [SI], AL
+	INC SI
+	JMP ACCEPTHARDQ2ANSWER
+
+STOPHARDQ2ANSWER:
+	MOV AL, 36
+	MOV [SI], AL
+
+	; CHECK IF CORRECT
+	MOV AL, HARDANSWER2
+	CMP LBLHANSWER2, AL
+	JE HARDCORRECTQ2
+	JMP HARDWRONGQ2
+
+HARDCORRECTQ2:
+	ADD SCORE, 1
+
+	; PAINT SCREEN BLACK
+	MOV AX, 0600H
+	MOV BH, 00
+	MOV CX, 0000H
+	MOV DX, 184FH
+	INT 10H
+
+	; PAINT GREEN BOX
+	MOV AX, 0600H
+	MOV BH, 20H
+	MOV CX, 0613H
+	MOV DX, 123BH
+	INT 10H
+
+	; PAINT EXAMINEE BAR WHITE
+	MOV AX, 0600H
+	MOV BH, 70H
+	MOV CX, 1800H
+	MOV DX, 184FH
+	INT 10H
+
+	; MOVE CURSOR FOR LBLEXAMINEE
+	MOV AH, 02H
+	MOV BH, 00
+	MOV DX, 1800H
+	INT 10H
+
+	; PRINT LBLEXAMINEE
+	MOV AH, 09H
+	LEA DX, LBLEXAMINEE
+	INT 21H
+
+	; PRINT EXAMINEENAME
+	MOV AH, 09H
+	LEA DX, EXAMINEENAME
+	INT 21H
+
+	; MOVE CURSOR FOR CORRECT
+	MOV AH, 02H
+	MOV BH, 00
+	MOV DX, 0C1CH
+	INT 10H
+
+	; PRINT CORRECT
+	MOV AH, 09H
+	LEA DX, LBLCORRECT
+	INT 21H
+
+	; MOVE CURSOR FOR LBLCONFIRM
+	MOV AH, 02H
+	MOV BH, 00
+	MOV DX, 0D1AH
+	INT 10H
+
+	; PRINT LBLCONFIRM
+	MOV AH, 09H
+	LEA DX, LBLCONFIRM
+	INT 21H
+
+	; WAIT FOR INPUT
+	MOV AH, 01H
+	INT 21H
+	JMP HARDQ3
+
+HARDWRONGQ2:
+	; PAINT WHOLE SCREEN BLACK
+	MOV AX, 0600H
+	MOV BH, 00
+	MOV CX, 0000H
+	MOV DX, 184FH
+	INT 10H
+
+	; PAINT GREEN BOX
+	MOV AX, 0600H
+	MOV BH, 20H
+	MOV CX, 0613H
+	MOV DX, 123BH
+	INT 10H
+
+	; PAINT EXAMINEE BAR WHITE
+	MOV AX, 0600H
+	MOV BH, 70H
+	MOV CX, 1800H
+	MOV DX, 184FH
+	INT 10H
+
+	; MOVE CURSOR FOR LBLEXAMINEE
+	MOV AH, 02H
+	MOV BH, 00
+	MOV DX, 1800H
+	INT 10H
+
+	; PRINT LBLEXAMINEE
+	MOV AH, 09H
+	LEA DX, LBLEXAMINEE
+	INT 21H
+
+	; PRINT EXAMINEENAME
+	MOV AH, 09H
+	LEA DX, EXAMINEENAME
+	INT 21H
+
+	; MOVE CURSOR FOR WRONG
+	MOV AH, 02H
+	MOV BH, 00
+	MOV DX, 0C1DH
+	INT 10H
+
+	; PRINT LBLWRONG
+	MOV AH, 09H
+	LEA DX, LBLWRONG
+	INT 21H
+
+	; MOVE CURSOR FOR LBLCONFIRM
+	MOV AH, 02H
+	MOV BH, 00
+	MOV DX, 0D1AH
+	INT 10H
+
+	; PRINT LBLCONFIRM
+	MOV AH, 09H
+	LEA DX, LBLCONFIRM
+	INT 21H
+
+	; WAIT FOR INPUT
+	MOV AH, 01H
+	INT 21H
+	JMP HARDQ3
+
 STARS:
 
 	; PAINT WHOLE SCREEN BLACK
@@ -2079,6 +2290,10 @@ EXIT:
 	MOV AH, 09H
 	LEA DX, lbltryagain
 	INT 21H
+
+	; CLEAR VARIABLE TRYAGAIN
+	MOV AL, 36
+	MOV TRYAGAIN, AL
 
 	; ACCEPT CHAR
 	LEA SI, TRYAGAIN
